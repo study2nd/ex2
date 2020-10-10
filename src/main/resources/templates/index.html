@@ -17,6 +17,10 @@
         user-select: none;
       }
 
+      #content {
+        height: 10rem;
+      }
+
       @media (min-width: 768px) {
         .bd-placeholder-img-lg {
           font-size: 3.5rem;
@@ -27,15 +31,57 @@
     <link href="/css/navbar-top.css" rel="stylesheet">
   </head>
   <body>
-  <main role="main" class="container">
-    <div class="jumbotron">
-      <h1>Navbar example</h1>
-      <p class="lead">This example is a quick exercise to illustrate how the top-aligned navbar works. As you scroll, this navbar remains in its original position and moves with the rest of the page.</p>
-      <a class="btn btn-lg btn-primary" href="../components/navbar/" role="button">View navbar docs &raquo;</a>
-    </div>
-  </main>
-<!--  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>-->
-<!--  <script>window.jQuery || document.write('<script src="../assets/js/vendor/jquery.slim.min.js"><\/script>')</script>-->
-  <script src="/js/bootstrap.bundle.min.js"></script>
-  <script src="/js/jquery.slim.min.js"></script>
+    <main role="main" class="container mt-3">
+      <div class="jumbotron">
+        <h2>게시글 쓰기</h2>
+        <form method="POST" action="/board">
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="title">제목</label>
+              <input type="text" name="title" class="form-control" id="title" required placeholder="제목을 입력하세요.">
+            </div>
+            <div class="form-group col-md-6">
+              <label for="password">비밀번호</label>
+              <input type="password" name="password" class="form-control" id="password">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="content">내용</label>
+            <textarea class="form-control" name="content" id="content" placeholder="내용을 입력하세요."></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary">Save</button>
+        </form>
+      </div>
+    </main>
+    <hr />
+
+    <main role="main" class="container mt-3">
+      <h2 class="mt-1">게시글 목록</h2>
+      {{#boardList}}
+      <table class="table">
+        <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Title</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <th scope="row">{{id}}</th>
+          <td>{{title}}</td>
+        </tr>
+        </tbody>
+      </table>
+      {{/boardList}}
+      {{^boardList}}
+      <h4 class="text-center">게시글이 없습니다.</h4>
+      {{/boardList}}
+    </main>
+
+
+
+
+    <script src="/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/jquery.slim.min.js"></script>
+  </body>
 </html>
