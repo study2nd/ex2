@@ -19,7 +19,7 @@ public class BoardController {
     public ModelAndView getHomeForModel() {
         List<Board> boardList = repository.findAll();
 
-        ModelAndView result = new ModelAndView("index");
+        ModelAndView result = new ModelAndView("board/index");
         result.addObject(boardList);
 
         return result;
@@ -54,7 +54,7 @@ public class BoardController {
         // Get item of boards
         Board board = repository.getOne(boardId);
 
-        ModelAndView result = new ModelAndView("item");
+        ModelAndView result = new ModelAndView("board/item");
         result.getModel().put("boardItem", board);
         return result;
     }
