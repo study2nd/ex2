@@ -2,6 +2,7 @@ package com.study.server.ex2.controller;
 
 import com.study.server.ex2.domain.Board;
 import com.study.server.ex2.repository.BoardRepository;
+import com.study.server.ex2.service.BoardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +15,8 @@ import java.util.List;
 public class BoardController {
     @Autowired
     private BoardRepository repository;
+    @Autowired
+    private BoardService service;
 
     @GetMapping("")
     public ModelAndView getHomeForModel() {
@@ -57,6 +60,29 @@ public class BoardController {
         ModelAndView result = new ModelAndView("board/item");
         result.getModel().put("boardItem", board);
         return result;
+    }
+
+    @GetMapping("/{id}/update")
+    public ModelAndView getUpdatePage(@PathVariable("id") Integer boardId) {
+        Board savedBoard = service.findOneById(boardId);
+
+        ModelAndView response = new ModelAndView("board/update");
+        response.getModel().put("board", savedBoard);
+
+        return response;
+    }
+
+    @PostMapping("/{id}/update")
+    public String postUpdateBoard(@PathVariable("id") Integer boardId,
+                                        @ModelAttribute Board updatedBoard) {
+        service.updateBoard(boardId, updatedBoard);
+
+        // 방법1) 수정된 데이터를 새로 출력해서 응답하는 방법
+        /*ModelAndView response = new ModelAndView("board/index");
+        response.getModel().put("board", resultBoard);
+        return response;*/
+        // 방법2) 기존에 게시글을 조회하는 페이지로 이동하는 방법
+        return "redirect:/board/" + boardId;
     }
 
 }
